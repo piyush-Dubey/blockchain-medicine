@@ -74,7 +74,7 @@ class Blockchain():
 		'sender'=sender,
 		'recipient'=recipient,
 		'amount'=amount,
-		)}
+		})
 		
 		return self.last_block['index']+1
 
