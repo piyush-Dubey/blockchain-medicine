@@ -72,7 +72,6 @@ class Blockchain():
     	def new_transaction(self,sender,recipient,amount):
 
         	self.current_transactions.append({
-
             	'sender'=sender,
             	'recipient'=recipient,
             	'amount'=amount
@@ -96,7 +95,7 @@ class Blockchain():
         	proof=0
 
         	while self.valid_proof(last_proof,proof) is False:
-            	proof += 1
+            		proof += 1
             
             	return proof
 	@staticmethod
@@ -106,21 +105,21 @@ class Blockchain():
        	 	guess_hash=hashlib.sha256(guess).hexdigest()
        	 	return guess_hash[:4]=='0000'
 
-    app=Flask(__name__)
+			
+app=Flask(__name__)
 
-    node_identifier = str(uuid4()).replace('-','')
+node_identifier = str(uuid4()).replace('-','')
 
-    blockchain=Blockchain()
-
-
-    @app.route('/mine',methods=['GET'])
-    def mine():
-        last_block = blockchain.last_block
-        last_proof = last_block['proof']
-        proof = blockchain.proof_of_work(last_proof)
+blockchain=Blockchain()
 
 
-        blockchain.new_transaction(
+@app.route('/mine',methods=['GET'])
+def mine():
+	last_block = blockchain.last_block
+	last_proof = last_block['proof']
+	proof = blockchain.proof_of_work(last_proof)
+
+	blockchain.new_transaction(
             sender = '0',
             recipient= node_identifier',
             amount=1,
@@ -139,8 +138,8 @@ class Blockchain():
 	return jsonify(response),200
 			
 			
-    @app.route('/transaction/new', methods=['POST'])			
-    def new_transaction():
+@app.route('/transaction/new', methods=['POST'])			
+def new_transaction():
 			
         values =  request.get_json()
 
@@ -153,8 +152,8 @@ class Blockchain():
         return jsonify(response), 201
 
 			
-    @app.route('/chain', methods=['GET'])
-    def full_chain():
+@app.route('/chain', methods=['GET'])
+def full_chain():
         response={
             'chain':blockchain.chain,
             'length': len(blockchain.chain),
@@ -162,8 +161,8 @@ class Blockchain():
         return jsonify(response), 200
 
                                         
-    @app.route('/nodes/register',methods=['POST'])
-    def register_nodes():
+@app.route('/nodes/register',methods=['POST'])
+def register_nodes():
         values=request.get_json()
 
         nodes=values.get('nodes')
@@ -188,7 +187,7 @@ def consensus():
         }
     else:
         response={
-            'message':'Our chain is authorative',
+            'message':'Our chain is authoritative',
             'chain':blockchain.chain
         }
 
@@ -196,7 +195,7 @@ def consensus():
     return jsonify(response), 200
                                         
 if __name__='__main__':
-    from argparse import ArguementParser
+    from argparse import ArgumentParser
     parser = ArgumentParser()
     parser.add_argument('-p','--port',default=5000,type=int, help='port to listen on')
     args=parser.parse_args()
