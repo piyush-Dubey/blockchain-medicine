@@ -32,6 +32,8 @@ class Blockchain():
 			print("\n-----------\n")
 			if block['previous_hash'] != self.hash[last_block]:
 				return False
+			if not self.valid_proof(last_block['proof'], block['proof']):
+				return False
 			last_block = block
 			current_index = current_index + 1
 		return True
