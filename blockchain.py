@@ -56,8 +56,7 @@ class Blockchain():
 			return True
 		return False
 
-	def new_block(self, proof,previous_hash):
-		
+	def new_block(self, proof,previous_hash):	
 		block = {
 			'index':len(self.chain)+1,
 			'timestamp' : time(),
@@ -70,11 +69,10 @@ class Blockchain():
 		return block
 
 	def new_transaction(self,sender,recipient,amount):
-		self.current_transactions.append({
-			'sender'=sender,
-			'recipient'=recipient,
-			'amount'=amount,
-		})
+		self.current_transactions.append({'sender'=sender,
+						  'recipient'=recipient,
+						  'amount'=amount,
+						 })
 		
 		return self.last_block['index']+1
 
