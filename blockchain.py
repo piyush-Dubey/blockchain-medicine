@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 from uuid import uuid4
 
 import requests
-from flask import flask, jsonify, request
+from flask import Flask, jsonify, request
 
 class Blockchain():
 	"""docstring for Blockchain"""
@@ -30,7 +30,7 @@ class Blockchain():
 			print(f'{last_block}')
 			print(f'{block}')
 			print("\n-----------\n")
-			if block['previous_hash'] != self.hash[last_block]:
+			if block['previous_hash'] != self.hash(last_block):
 				return False
 			if not self.valid_proof(last_block['proof'], block['proof']):
 				return False
@@ -94,8 +94,8 @@ class Blockchain():
 		
 		while self.valid_proof(last_proof,proof) is False:
 			proof += 1
-			
 		return proof
+	
 	@staticmethod
 	def valid_proof(last_proof,proof):
 		guess=f'{last_proof}{prooof}'.encode()
@@ -118,7 +118,7 @@ def mine():
 	
 	blockchain.new_transaction(
 		sender = '0',
-		recipient= node_identifier',
+		recipient= node_identifier,
 		amount=1,
 	)
 
@@ -128,7 +128,7 @@ def mine():
 	response= {
 		'message':'New Block Forged',
 		'index' : block['index'],
-		'transaction': block['transactions'],
+		'transactions': block['transactions'],
 		'proof':block['proof'],
 		'previous_hash' : block['previous_hash'],
 	}
