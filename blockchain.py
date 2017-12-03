@@ -206,7 +206,7 @@ def consensus():
 @app.route('/', methods=['GET'])
 def main():
     #register_node
-    return "hELLO"
+    return "HELLO!!!<br>Instructions<br><br>Execute hasura for vitran app in console<br>Open the browser and go to https://vitran.fibber71.hasura-app.io/mine<br>You can observe the blocks for the blockchain generated<br>Refresh the page to create another block and so on<br>Go to https://vitran.fibber71.hasura-app.io/chain to view the complete blockchain<br><br>The new blocks are generated instantly due to low difficulty setting in proof of work for demonstration."
 
 if __name__=='__main__':
     from argparse import ArgumentParser
